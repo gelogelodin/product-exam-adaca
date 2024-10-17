@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from './product.service';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -19,8 +19,12 @@ export const routes: Routes = [
     ProductListComponent,
   ],
   imports: [
+    RouterModule.forRoot(routes),
     CommonModule,
     ReactiveFormsModule,
+  ],
+  exports: [
+    RouterModule
   ],
   providers: [ProductService],
 })

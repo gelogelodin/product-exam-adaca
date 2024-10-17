@@ -1,21 +1,28 @@
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <label for="name">Name:</label>
-    <input id="name" formControlName="name" type="text" />
-    <div *ngIf="productForm.controls['name'].invalid && productForm.controls['name'].touched">
-      Name is required.
+<div class="container mt-4">
+  <h2>Add/Edit Product</h2>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" formControlName="name" class="form-control" />
+      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="text-danger">
+        Name is required.
+      </div>
     </div>
-    <label for="description">Description:</label>
-    <input id="description" formControlName="description" type="text" />
-    <div *ngIf="productForm.controls['description'].invalid && productForm.controls['description'].touched">
-      Description is required.
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input id="description" formControlName="description" class="form-control" />
+      <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" class="text-danger">
+        Description is required.
+      </div>
     </div>
-  
-    <label for="price">Price:</label>
-    <input id="price" formControlName="price" type="number" />
-    <div *ngIf="productForm.controls['price'].invalid && productForm.controls['price'].touched">
-      Price must be a positive number.
+    <div class="form-group mb-3">
+      <label for="price">Price</label>
+      <input id="price" formControlName="price" type="number" class="form-control" />
+      <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="text-danger">
+        Price must be a positive number.
+      </div>
     </div>
-  
-    <button type="submit" [disabled]="productForm.invalid">Save Product</button>
+    <button type="submit" class="btn btn-success d-inline-block mr-1">Save</button>
+    <a class="custom-spacing btn inline-block btn-secondary" [routerLink]="['/products']">Cancel</a>
   </form>
-  
+</div>
