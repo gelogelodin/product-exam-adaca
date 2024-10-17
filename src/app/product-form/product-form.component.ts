@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { Product } from '../models/product.model';
 
@@ -13,7 +14,8 @@ export class ProductFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router
   ) {
     this.productForm = this.fb.group({
       id: [null],
@@ -27,12 +29,14 @@ export class ProductFormComponent implements OnInit {
 
   onSubmit(): void {
     const product: Product = this.productForm.value;
+
     if (product.id) {
       this.productService.updateProduct(product);
+      this.router.navigate(['/products']);
     } else {
       product.id = Date.now();
       this.productService.addProduct(product);
+      this.router.navigate(['/products']);
     }
-    this.productForm.reset();
   }
 }

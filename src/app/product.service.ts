@@ -1,41 +1,37 @@
 import { Injectable } from '@angular/core';
-import { Product } from './models/product.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Product } from './models/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private products: Product[] = [];
-  private products$ = new BehaviorSubject<Product[]>(this.products);
+  private products: Product[] = [
+    { id: 1, name: 'Product 1', description: 'Description 1', price: 100 },
+    { id: 2, name: 'Product 2', description: 'Description 2', price: 200 }
+  ];
 
-  constructor() {}
+  private productsSubject = new BehaviorSubject<Product[]>(this.products);
 
   getProducts(): Observable<Product[]> {
-    return this.products$.asObservable();
+    return this.productsSubject.asObservable();
   }
 
   addProduct(product: Product): void {
-    setTimeout(() => {
-      this.products.push(product);
-      this.products$.next(this.products);
-    }, 1000);
+    this.products.push(product);
+    this.productsSubject.next(this.products);
   }
 
-  updateProduct(product: Product): void {
-    setTimeout(() => {
-      const index = this.products.findIndex(p => p.id === product.id);
-      if (index !== -1) {
-        this.products[index] = product;
-        this.products$.next(this.products);
-      }
-    }, 1000);
+  updateProduct(updatedProduct: Product): void {
+    const index = this.products.findIndex(p => p.id === updatedProduct.id);
+    if (index !== -1) {
+      this.products[index] = updatedProduct;
+      this.productsSubject.next(this.products);
+    }
   }
 
   deleteProduct(id: number): void {
-    setTimeout(() => {
-      this.products = this.products.filter(p => p.id !== id);
-      this.products$.next(this.products);
-    }, 1000);
+    this.products = this.products.filter(p => p.id !== id);
+    this.productsSubject.next(this.products);
   }
 }
