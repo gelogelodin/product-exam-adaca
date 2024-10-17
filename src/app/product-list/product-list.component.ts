@@ -19,7 +19,7 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  editProduct(id: number): void {
+  editProduct(id: any): void {
   }
 
   deleteProduct(id: number): void {
